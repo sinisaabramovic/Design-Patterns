@@ -30,13 +30,6 @@ public class EnemySpawner : MonoBehaviour {
 	}   
 }
 
-public enum EnemyTypes
-{
-    flying = 0,
-    walking,
-    swimming
-};
-
 public class EnemyFactory
 {
     public IEnemy GetEnemy(EnemyTypes enemyType)

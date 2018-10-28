@@ -7,8 +7,8 @@ namespace AbstractFactoryNamespace
     public class NPCSpawner : MonoBehaviour
     {
         // Or use enums (instend of strings)
-        NPCFactory enemmyFactory = NPCFactoryProducer.GetFactory("EnemyFactory");
-        NPCFactory friendlyFactory = NPCFactoryProducer.GetFactory("FriendlyFactory");
+        NPCFactory enemmyFactory = NPCFactoryProducer.GetFactory(FactoryTypes.enemy);
+        NPCFactory friendlyFactory = NPCFactoryProducer.GetFactory(FactoryTypes.friendly);
 
         // Use this for initialization
         void Start()
@@ -180,19 +180,21 @@ namespace AbstractFactoryNamespace
                     return null;
             }
         }
+
+        // Overrides of the GetFactory so it can use enums insteed of strings (more elegant solution) 
+        public static NPCFactory GetFactory(FactoryTypes choice)
+        {
+            switch (choice)
+            {
+                case FactoryTypes.enemy:
+                    return new EnemyFactory();
+                case FactoryTypes.friendly:
+                    return new FriendlyFactory();
+                default:
+                    return null;
+            }
+        }
     }
-
-    public enum EnemyTypes
-    {
-        flying = 0,
-        walking
-    };
-
-    public enum FriendlyTypes
-    {
-        flying = 0,
-        walking
-    };
 }
 
 
