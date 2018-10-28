@@ -7,13 +7,29 @@ namespace AbstractFactoryNamespace
     public class NPCSpawner : MonoBehaviour
     {
         // Or use enums (instend of strings)
-        NPCFactory enemmyFactory = NPCFactoryProducer.GetFactory(FactoryTypes.enemy);
+        NPCFactory enemyFactory = NPCFactoryProducer.GetFactory(FactoryTypes.enemy);
         NPCFactory friendlyFactory = NPCFactoryProducer.GetFactory(FactoryTypes.friendly);
+        Enemy enemy1, enemy2;
+        Friendly friendly1, friendly2;
 
         // Use this for initialization
+
+        private void Awake()
+        {
+            enemy1 = enemyFactory.GetEnemy(EnemyTypes.flying);
+            enemy2 = enemyFactory.GetEnemy(EnemyTypes.walking);
+
+            friendly1 = friendlyFactory.GetFriendly(FriendlyTypes.flying);
+            friendly2 = friendlyFactory.GetFriendly(FriendlyTypes.walking);
+        }
+
         void Start()
         {
+            enemy1.Move();
+            enemy2.Attack();
 
+            friendly1.Attack();
+            friendly2.Move();
         }
 
         // Update is called once per frame
