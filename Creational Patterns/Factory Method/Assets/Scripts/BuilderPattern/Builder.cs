@@ -4,9 +4,23 @@ using UnityEngine;
 
 public class Builder : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+    // Use this for initialization
+    LevelDirector levelDirector;
+	void Start () 
+    {
+        levelDirector = new LevelDirector();
+
+        LevelBuilder simpleIceLevelBuilder = new IceLevelBuilder();
+        LevelBuilder complexFireLevelBuilder = new FireLevelBuilder();
+
+        levelDirector.ConstructSimpleLevel(simpleIceLevelBuilder);
+        levelDirector.ConstructComplexLevel(complexFireLevelBuilder);
+
+        Level simpleIceLevel = simpleIceLevelBuilder.GetLevel();
+        Level complexFireLevel = complexFireLevelBuilder.GetLevel();
+
+        simpleIceLevel.PrintLevel();
+        complexFireLevel.PrintLevel();
 	}
 	
 	// Update is called once per frame
@@ -33,6 +47,7 @@ public class LevelDirector
     }
 }
 
+// Basicly interface
 public abstract class LevelBuilder
 {
     public abstract void BuildFloor();
