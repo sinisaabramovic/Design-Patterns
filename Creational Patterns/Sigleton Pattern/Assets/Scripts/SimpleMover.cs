@@ -12,6 +12,7 @@ public class SimpleMover : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // Get reference to sigleton (GameManager)
         Move(GameManager.Instance.level);
 	}
 
