@@ -6,6 +6,9 @@ namespace AbstractFactoryNamespace
 {
     public class NPCSpawner : MonoBehaviour
     {
+        // Or use enums (instend of strings)
+        NPCFactory enemmyFactory = NPCFactoryProducer.GetFactory("EnemyFactory");
+        NPCFactory friendlyFactory = NPCFactoryProducer.GetFactory("FriendlyFactory");
 
         // Use this for initialization
         void Start()
@@ -113,6 +116,83 @@ namespace AbstractFactoryNamespace
             Debug.Log("WalkingFriendly  Move !");
         }
     }
+
+    public abstract class NPCFactory
+    {
+        public abstract Enemy GetEnemy(EnemyTypes enemyType);
+        public abstract Friendly GetFriendly(FriendlyTypes friendlyType);
+    }
+
+    public class EnemyFactory : NPCFactory
+    {
+        public override Enemy GetEnemy(EnemyTypes enemyType)
+        {
+            switch(enemyType)
+            {
+                case EnemyTypes.flying:
+                    return new FlyingEnemey();
+                case EnemyTypes.walking:
+                    return new WalkingEnemy();
+                default:
+                    return new WalkingEnemy();
+            }
+        }
+
+        public override Friendly GetFriendly(FriendlyTypes friendlyType)
+        {
+            return null;
+        }
+    }
+
+    public class FriendlyFactory : NPCFactory
+    {
+        public override Enemy GetEnemy(EnemyTypes enemyType)
+        {
+            return null;
+        }
+
+        public override Friendly GetFriendly(FriendlyTypes friendlyType)
+        {
+            switch (friendlyType)
+            {
+                case FriendlyTypes.flying:
+                    return new FlyingFriendly();
+                case FriendlyTypes.walking:
+                    return new WalkingFriendly();
+                default:
+                    return new WalkingFriendly();
+            }
+        }
+    }
+
+    public class NPCFactoryProducer
+    {
+        // Producer
+        public static NPCFactory GetFactory (string choice)
+        {
+            switch(choice)
+            {
+                case ("EnemyFactory"):
+                    return new EnemyFactory();
+                case ("FriendlyFactory"):
+                    return new FriendlyFactory();
+                default:
+                    return null;
+            }
+        }
+    }
+
+    public enum EnemyTypes
+    {
+        flying = 0,
+        walking
+    };
+
+    public enum FriendlyTypes
+    {
+        flying = 0,
+        walking
+    };
 }
 
 
