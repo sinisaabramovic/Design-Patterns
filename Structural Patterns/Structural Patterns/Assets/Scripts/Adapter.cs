@@ -39,6 +39,42 @@ namespace Adapter{
         public abstract void Draw(int x1, int x2, int y1, int y2);
     }
 
+    public class LineAdapter : Shape
+    {
+        private Line adaptee;
+
+        public LineAdapter(Line line)
+        {
+            this.adaptee = line;
+        }
+
+        public override void Draw(int x1, int x2, int y1, int y2)
+        {
+            adaptee.Draw(x1, x2, y1, y2);
+        }
+    }
+
+    public class RectangleAdapter : Shape
+    {
+        private Rectangle adaptee;
+
+        public RectangleAdapter(Rectangle rectangle)
+        {
+            this.adaptee = rectangle;
+        }
+
+        public override void Draw(int x1, int x2, int y1, int y2)
+        {
+            int x = Mathf.Min(x1, x2);
+            int y = Mathf.Min(y1, y2);
+
+            int width = Mathf.Abs(x2 - x1);
+            int height = Mathf.Abs(y2 - y1);
+
+            adaptee.Draw(x, y, width, height);
+        }
+    }
+
     public class Rectangle
     {
         public string name;
