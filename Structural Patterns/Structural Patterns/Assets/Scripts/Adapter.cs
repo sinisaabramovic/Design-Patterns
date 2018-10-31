@@ -9,10 +9,12 @@ namespace Adapter{
     {
         object[] shapes = { new Line(), new Rectangle() };
         // Use this for initialization
+        Shape[] adaptedShapes = { new LineAdapter(new Line()), new RectangleAdapter(new Rectangle())};
         int x1 = 5, x2 = 10, y1 = 10, y2 = 20;
         int w = 5, h = 10;
         void Start()
         {
+            // BAD SOLUTION
             foreach(object shape in shapes){
                 if(shape.GetType() == typeof(Line))
                 {
@@ -22,6 +24,16 @@ namespace Adapter{
                     ((Rectangle)shape).Draw(x1, y1, w, h);
                 }
             }
+            // EOF BAD SOLUTION
+            //
+
+            // Much more elegant solution
+            // Rather to create instance of lines and rectangles we just use base Shape
+            foreach(Shape shape in adaptedShapes)
+            {
+                shape.Draw(x1, y1, x2, y2);    
+            }
+
         }
 
         // Update is called once per frame
@@ -47,7 +59,8 @@ namespace Adapter{
         {
             this.adaptee = line;
         }
-
+        // We dont need to touch the basic class Line to use their Draw method
+        // We just add higher level of abstraction to it
         public override void Draw(int x1, int x2, int y1, int y2)
         {
             adaptee.Draw(x1, x2, y1, y2);
